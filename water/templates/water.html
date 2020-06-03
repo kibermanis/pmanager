@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{#{% csrf_token %}#}
+
+{% block content %}
+
+    <div class="card-deck">
+
+{% for wconter in wconters.all %}
+
+
+            <div class="card" style="max-width: 18rem; >
+            <form action="{% url 'water' %}" method="post">
+            {% csrf_token %}
+          <img src="{% static 'water/counter.png' %}" class="card-img-top" alt="logo">
+          <div class="card-body">
+            <h5 class="card-title">Dzīvoklis: {{ wconter.apartment_num  }}</h5>
+            <p class="card-text">Adrese: {{ wconter.apartment_num.building_code.building_adress }}</p>
+            <p class="card-text">Nr: {{ wconter.water_counter_num }}</p>
+            <p class="card-text">Type: {{ wconter.water_counter_type }}</p>
+            <input type="hidden" name="user" value="{{ user.email }}"/>
+            <input type="hidden" name="counter_nr" value="{{ wconter.water_counter_num }}"/>
+            <div class="form-group input-group">
+                <span class="has-float-label">
+                    <input class="form-control" name="reading" type="text" placeholder="Counter reading"/>
+                </span>
+            </div>
+
+            <input type="submit" value="Send" class="btn btn-primary"</input>
+          </div>
+            </form>
+             </div>
+{% endfor %}
+                </div>
+
+{% endblock %}
